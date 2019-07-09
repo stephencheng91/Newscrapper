@@ -26,16 +26,15 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+// Connect to the Mongo DB, nor create news database in mongo
+mongoose.connect("mongodb://localhost/news", { useNewUrlParser: true });
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://kuan93017:Ste20022468@ds221416.mlab.com:21416/heroku_mqdtbgp9";
 
-mongoose.connect(MONGODB_URI);
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
-
 // A GET route for scraping the website
 app.get("/scrape", function (req, res) {
   // First, we grab the body of the html with axios
@@ -44,21 +43,40 @@ app.get("/scrape", function (req, res) {
     var $ = cheerio.load(response.data);
     //create empty object to store scrape data
     var result = {};
-    $("article h4").each(function (i, element) {
+    $(".article").each(function (i, element) {
       //Add title, summary, url to result object
-      result.title = $(this).children("a").text();
-      result.url = $(this).children("a").attr("href");
+      result.title = $(this).find(".title").children().text();
+      result.link = $(this).find(".title").children().attr("href");
+      result.summary = $(this).find(".content").children().children().text()
+
+      console.log("result: ", result);
+
+      //Push result to collection article
+      db.Article.create(result)
+      .then(function(res){
+        // console.log(res)
+      })
+      .catch(function(err){
+        // console.log("err,,", err)
+      })
+
     })
 
-    $(".content").each(function (i, element) {
-      result.summary=$(this).children("p").text();
-    })
-
-    console.log(result);
+    //console.log(result);
 
 
     // Send a message to the client
     res.send("Scrape Complete");
+  });
+});
+
+app.get("/article", function(req, res){
+  db.Article.find({})
+  .then(function(dbArticle){
+    res.json(dbArticle);
+  })
+  .catch(function(err){
+    res.json(err);
   });
 });
 

@@ -1,51 +1,38 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Scraping With Mongoose</title>
-    <style>
-      body { background-color: #F2F6D0 }
-      #wrapper {
-        width: 960px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 5%;
-      }
-      #articles {
-        display: inline-block;
-        overflow: auto;
-        width: 60%;
-        height: 700px;
-      }
-      #notes {
-        float: right;
-        width: 30%;
-      }
-      textarea, input {
-        display: block;
-        width: 100%;
-        background-color: #FCF5C7;
-      }
-      input {
-        height: 36px;
-        font-size: 24px;
-      }
-      textarea {
-        height: 200px;
-        font-size: 18px;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="wrapper">
-      <h1>News Scrapper</h1>
-      <button id="start">Scrape Start</button>
-      <div id="headlines"></div>
-      <div id="summary"></div>
-      <div id="URL"></div>
-      <div id="notes"></div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="app.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <title>News Scrapper</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Import Jquery -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
+  <!-- Link to Moment.js should go here -->
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+</head>
+
+<body>
+  <div id="wrapper">
+
+    <table class="table">
+      <thead>
+        <h1>News Scrapper</h1>
+        <button id="start">Scrape Start</button>
+        <tr>
+          <th scope="col">Headlines</th>
+          <th scope="col">Summary</th>
+          <th scope="col">Link</th>
+          <th scope="col">notes</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
 </html>
