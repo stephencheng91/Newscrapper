@@ -27,14 +27,14 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB, nor create news database in mongo
-mongoose.connect("mongodb://localhost/news", { useNewUrlParser: true });
+// mongoose.connect("mongodb://localhost/news", { useNewUrlParser: true });
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://kuan93017:Ste20022468@ds221416.mlab.com:21416/heroku_mqdtbgp9";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://kuan93017:Ste20022468@ds221416.mlab.com:21416/heroku_mqdtbgp9";
 
-// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
-// Routes
+// Routes 
 // A GET route for scraping the website
 app.get("/scrape", function (req, res) {
   // First, we grab the body of the html with axios
