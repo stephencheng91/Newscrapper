@@ -70,6 +70,7 @@ app.get("/scrape", function (req, res) {
   });
 });
 
+//Getting all article
 app.get("/article", function(req, res){
   db.Article.find({})
   .then(function(dbArticle){
@@ -79,6 +80,32 @@ app.get("/article", function(req, res){
     res.json(err);
   });
 });
+
+//Getting specific article
+app.get("/articles/:id", function(req, res){
+  db.Article.findOne({_id: req.params.id})
+  .populate("comment")
+  .then(function(dbArticle){
+    res.json(dbArticle);
+  })
+  .catch(function(err){
+    res.json(err);
+  })
+});
+
+// update article notes
+app.post("/articles/:id", function(req, res){
+  db.Comment.create(req.body)
+  .then(function(dbComment){
+    return db.Article.findOneAndUpdate({_id: req.params.id},{comment: dbComment._id}, {new: true});
+  })
+  .then(function(dbArticle){
+    res.json(dbArticle);
+  })
+  .catch(function(err){
+    res.json(err);
+  })
+})
 
 // Start the server
 app.listen(PORT, function () {
